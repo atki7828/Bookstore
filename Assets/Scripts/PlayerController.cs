@@ -43,11 +43,15 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionStay2D(Collision2D other)
     {
         foreach(ContactPoint2D c in other.contacts) {
-            Debug.Log(c.point);
+            //Debug.Log(c.point);
             if(c.point.y < this.transform.position.y) {
                 grounded = true;
                 break;
             }
         }
+    }
+
+    private void OnCollisionExit2D(Collision2D other) {
+        grounded = false; 
     }
 }
