@@ -13,10 +13,12 @@ public class PlayerController : MonoBehaviour
     float jump = 10f;
 
     bool grounded = true;
+    Camera cam;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        cam = Camera.main;
     }
 
     void Update()
@@ -34,10 +36,18 @@ public class PlayerController : MonoBehaviour
             //rb.velocity = new Vector2(rb.velocity.x, jump);
         }
 
+        cam.transform.position = new Vector3(transform.position.x,transform.position.y,cam.transform.position.z);
+
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D other)
     {
-        grounded = true;
+        foreach(ContactPoint2D c in other.contacts) {
+            Debug.Log(c.point);
+            if(c.point.y < this.transform.position.y) {
+                grounded = true;
+                break;
+            }
+        }
     }
 }
